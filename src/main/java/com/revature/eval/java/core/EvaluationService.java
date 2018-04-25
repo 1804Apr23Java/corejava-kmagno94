@@ -29,9 +29,21 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
-	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public static String acronym(String phrase) {
+		char[] acronym = new char[phrase.length()];
+		char l = phrase.charAt(0);
+		if(l == ' ') {
+			//Do nothing (If phrase input begins with a space by accident)
+		} else
+			acronym[0] = l;
+		for (int i = 0, j = 1; i < phrase.length(); i++) {
+			l = phrase.charAt(i);
+			if(l == ' ') {
+				acronym[j] = phrase.charAt(i+1);
+				j++;
+			}
+		}
+		return new String(acronym);
 	}
 
 	/**
