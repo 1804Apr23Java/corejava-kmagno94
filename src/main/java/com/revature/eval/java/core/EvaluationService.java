@@ -29,7 +29,7 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
-	public static String acronym(String phrase) {
+	public String acronym(String phrase) {
 		char[] acronym = new char[phrase.length()];
 		char l = phrase.charAt(0);
 		if(l == ' ') {
@@ -133,7 +133,7 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public static int getScrabbleScore(String string) {
+	public int getScrabbleScore(String string) {
 		int score = 0;
 		char c;
 		for(int i=0; i < string.length(); i++) {
