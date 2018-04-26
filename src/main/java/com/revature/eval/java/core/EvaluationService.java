@@ -30,7 +30,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		char[] acronym = new char[phrase.length()];
+		char[] acronym = new char[];
 		char l = phrase.charAt(0);
 		if(l == ' ') {
 			//Do nothing (If phrase input begins with a space by accident)
@@ -217,8 +217,38 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String cleanNumber = "";
+		
+		for(int i = 0; i < string.length(); i++) {
+			switch(string.charAt(i)) {
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				cleanNumber += string.charAt(i);
+				break;
+			case '+':
+			case ' ':
+			case '.':
+			case '(':
+			case ')':
+			case '-':
+				break;
+			default:
+				throw new  IllegalArgumentException("Non-numeric Entry has been entered!");
+			}
+		}
+		if(cleanNumber.length() > 11)
+			throw new IllegalArgumentException("Invalid Number. More than 11 digits have been entered!");
+		
+		
+		return cleanNumber;
 	}
 
 	/**
@@ -485,7 +515,7 @@ public class EvaluationService {
 	}
 
 	/**
-	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
+	 * 16. Determine if a sentence is a pangram. A pangram (Greek: Ï€Î±Î½ Î³Ï�Î¬Î¼Î¼Î±, pan
 	 * gramma, "every letter") is a sentence using every letter of the alphabet at
 	 * least once. The best known English pangram is:
 	 * 
