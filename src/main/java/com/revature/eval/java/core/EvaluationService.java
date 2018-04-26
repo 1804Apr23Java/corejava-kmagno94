@@ -149,16 +149,32 @@ public class EvaluationService {
 				case 'r':
 				case 's':
 				case 't':
+				case 'A':
+				case 'E':
+				case 'I':
+				case 'O':
+				case 'U':
+				case 'L':
+				case 'N':
+				case 'R':
+				case 'S':
+				case 'T':
 					score += 1;
 					break;
 				case 'd':
 				case 'g':
+				case 'D':
+				case 'G':
 					score += 2;
 					break;
 				case 'b':
 				case 'c':
 				case 'm':
 				case 'p':
+				case 'B':
+				case 'C':
+				case 'M':
+				case 'P':
 					score += 3;
 					break;
 				case 'f':
@@ -166,17 +182,27 @@ public class EvaluationService {
 				case 'v':
 				case 'w':
 				case 'y':
+				case 'F':
+				case 'H':
+				case 'V':
+				case 'W':
+				case 'Y':
 					score += 4;
 					break;
 				case 'k':
+				case 'K':
 					score += 5;
 					break;
 				case 'j':
 				case 'x':
+				case 'J':
+				case 'X':
 					score += 8;
 					break;
 				case 'q':
 				case 'z':
+				case 'Q':
+				case 'Z':
 					score += 10;
 					break;
 				default :
