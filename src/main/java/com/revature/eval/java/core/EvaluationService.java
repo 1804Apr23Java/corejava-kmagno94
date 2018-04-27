@@ -287,8 +287,45 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	
+		String cleanString = "";
+		
+		for(int i = 0; i < string.length(); i++) {
+			switch(string.charAt(i)) {
+			case ',':
+				// Replace comma with spaces
+				cleanString += " ";
+				break;
+			case '\t':
+			case '\b':
+			case '\n':
+			case '\r':
+			case '\f':
+			case '\'':
+			case '\"':
+			case '\\':
+				// Handles Control Characters by passing over them when creating cleanString
+				break;
+			default:
+				cleanString += string.charAt(i);
+				break;
+			}
+		}
+		
+		String [] word = cleanString.split(" "); 
+		Map<String, Integer> words = new HashMap<String, Integer>();
+		
+		for (String w : word) {
+			if(words.containsKey(w)) {
+				//If a word exists in the Map
+				words.put(w, words.get(w)+1);
+			} else {
+				//If a word does not exist in the Map
+				words.put(w, 1);
+			}
+		}
+		
+		return words;
 	}
 
 	/**
