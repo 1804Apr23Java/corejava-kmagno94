@@ -30,20 +30,28 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		char[] acronym = new char[];
-		char l = phrase.charAt(0);
-		if(l == ' ') {
-			//Do nothing (If phrase input begins with a space by accident)
-		} else
-			acronym[0] = l;
-		for (int i = 0, j = 1; i < phrase.length(); i++) {
+		
+		String acronym = "";
+		char l;
+		
+		for (int i = 0; i < phrase.length(); i++) {
 			l = phrase.charAt(i);
-			if(l == ' ') {
-				acronym[j] = phrase.charAt(i+1);
-				j++;
+			if (i == 0) {
+				// For first letter in the acronym
+				if (l == ' ') {
+					// Checks if the first character in the string is a blank and then adds the next letter
+					acronym += Character.toUpperCase(phrase.charAt(i+1));
+				}
+				// If it isn't a blank then add the letter
+				acronym += Character.toUpperCase(phrase.charAt(i));
+			}
+			if (l == ' ' || l == '-') {
+				// If the current character is a space or dash go to the next letter and add to acronym
+				acronym += Character.toUpperCase(phrase.charAt(i+1));
 			}
 		}
-		return new String(acronym);
+		
+		return acronym;
 	}
 
 	/**
@@ -367,7 +375,33 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
+			
+			int numSearch = Integer.parseInt(t.toString());
+			int indVal=0;
+			
+			int first = 0;
+			int last = sortedList.size() - 1;
+			
+			while(first <= last) {
+				int middle = (first + last)/2;
+				try {
+				indVal = Integer.parseInt((String) sortedList.get(middle));
+				} catch (ClassCastException e) {
+					// If the list is not a String
+					indVal = (int) sortedList.get(middle);
+				}
+				if(indVal == numSearch) {
+					// If the middle index is the key
+					return middle;
+				} else if (indVal < numSearch) {
+					// If the middle index is less than the key value
+					first = middle + 1;
+				} else if (indVal > numSearch) {
+					// If the middle index is greater than the key value
+					last = middle - 1;
+				}
+			}
+			// Key is the first element
 			return 0;
 		}
 
@@ -404,8 +438,149 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String pigLatin = "";
+		String[] words = string.split(" ");
+		String pigWord = "";
+
+		for (int i = 0; i < words.length; i++) {
+
+			switch (words[i].charAt(0)) {
+			// Vowels
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+				words[i] += "ay";
+				break;
+			// Consonant Clusters
+			case 's':
+				// Two lettered s clusters
+				if (words[i].charAt(1) == 'm' || words[i].charAt(1) == 'n' || words[i].charAt(1) == 't'
+						|| words[i].charAt(1) == 'w' || words[i].charAt(1) == 'k' || words[i].charAt(1) == 'l'
+						|| words[i].charAt(1) == 'p') {
+					if (words[i].charAt(2) != 'h') {
+						for (int j = 0; j < words[i].length() - 2; j++) {
+							pigWord += words[i].charAt(j + 2);
+						}
+						for (int k = 0; k < 2; k++) {
+							pigWord += words[i].charAt(k);
+						}
+						pigWord += "ay";
+						words[i] = pigWord;
+						pigWord = "";
+						break;
+					}
+				}
+				// Three lettered s clusters
+				if ((words[i].charAt(1) == 'p' && words[i].charAt(2) == 'h')
+						|| (words[i].charAt(1) == 'h' && words[i].charAt(2) == 'r')
+						|| (words[i].charAt(1) == 'c' && words[i].charAt(2) == 'h')) {
+					for (int j = 0; j < words[i].length() - 3; j++) {
+						pigWord += words[i].charAt(j + 3);
+					}
+					for (int k = 0; k < 3; k++) {
+						pigWord += words[i].charAt(k);
+					}
+					pigWord += "ay";
+					words[i] = pigWord;
+					pigWord = "";
+					break;
+				}
+			case 't':
+				// Two lettered t clusters
+				if (words[i].charAt(1) == 'w' || words[i].charAt(1) == 'r' || words[i].charAt(1) == 'h') {
+					for (int j = 0; j < words[i].length() - 2; j++) {
+						pigWord += words[i].charAt(j + 2);
+					}
+					for (int k = 0; k < 2; k++) {
+						pigWord += words[i].charAt(k);
+					}
+					pigWord += "ay";
+					words[i] = pigWord;
+					pigWord = "";
+					break;
+				}
+				// Three lettered t clusters
+				if ((words[i].charAt(1) == 'h' && words[i].charAt(2) == 'w')
+						|| (words[i].charAt(1) == 'h' && words[i].charAt(2) == 'r')) {
+					for (int j = 0; j < words[i].length() - 3; j++) {
+						pigWord += words[i].charAt(j + 3);
+					}
+					for (int k = 0; k < 3; k++) {
+						pigWord += words[i].charAt(k);
+					}
+					pigWord += "ay";
+					words[i] = pigWord;
+					pigWord = "";
+					break;
+				}
+			case 'd':
+				// d clusters
+				if (words[i].charAt(1) == 'w' || words[i].charAt(1) == 'r') {
+					for (int j = 0; j < words[i].length() - 2; j++) {
+						pigWord += words[i].charAt(j + 2);
+					}
+					for (int k = 0; k < 2; k++) {
+						pigWord += words[i].charAt(k);
+					}
+					pigWord += "ay";
+					words[i] = pigWord;
+					pigWord = "";
+					break;
+				}
+			case 'q':
+				if (words[i].charAt(1) == 'u') {
+					for (int j = 0; j < words[i].length() - 2; j++) {
+						pigWord += words[i].charAt(j + 2);
+					}
+					for (int k = 0; k < 2; k++) {
+						pigWord += words[i].charAt(k);
+					}
+					pigWord += "ay";
+					words[i] = pigWord;
+					pigWord = "";
+					break;
+				}
+			case 'c':
+			case 'p':
+			case 'f':
+			case 'g':
+			case 'b':
+				// All use 'r' or 'l' as second letter
+				if (words[i].charAt(1) == 'r' || words[i].charAt(1) == 'l') {
+					for (int j = 0; j < words[i].length() - 2; j++) {
+						pigWord += words[i].charAt(j + 2);
+					}
+					for (int k = 0; k < 2; k++) {
+						pigWord += words[i].charAt(k);
+					}
+					pigWord += "ay";
+					words[i] = pigWord;
+					pigWord = "";
+					break;
+				}
+			default:
+				// All other consonants
+				for (int j = 0; j < words[i].length() - 1; j++) {
+					pigWord += words[i].charAt(j + 1);
+				}
+				pigWord += words[i].charAt(0);
+				pigWord += "ay";
+				words[i] = pigWord;
+				pigWord = "";
+				
+			}
+
+			if (i == 0) {
+				// For first word
+				pigLatin += words[i];
+				continue;
+			}
+			pigLatin += " " + words[i];
+		}
+
+		return pigLatin;
 	}
 
 	/**
