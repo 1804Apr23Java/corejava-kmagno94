@@ -624,8 +624,28 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primes = new ArrayList<Long>();
+		
+		// Divisible by 2
+		while(l % 2 == 0) {
+			primes.add((long) 2);
+			l /= 2;
+		}
+		
+		// Divisible by other prime numbers
+		for(int i = 3; i <= Math.sqrt((long) l); i += 2) {
+			// Primes will be found until square root of number
+			while(l % i == 0) {
+				primes.add((long) i);
+				l /= i;
+			}
+		}
+		
+		// Prime number left after while loop
+		if(l > 2)
+			primes.add((long) l);
+		
+		return primes;
 	}
 
 	/**
@@ -663,10 +683,50 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+			String deciphered = "";
 
+			// lowercase
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String cipherAlphabet = "";
+			// UPPERCASE
+			String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			String upperCipherAlphabet = "";
+
+			// Shift both alphabets according to key
+			for (int j = 0; j < alphabet.length() - key; j++)
+				cipherAlphabet += alphabet.charAt(j + key);
+			for (int k = 0; k < key; k++)
+				cipherAlphabet += alphabet.charAt(k);
+			for (int j = 0; j < upperAlphabet.length() - key; j++)
+				upperCipherAlphabet += upperAlphabet.charAt(j + key);
+			for (int k = 0; k < key; k++)
+				upperCipherAlphabet += upperAlphabet.charAt(k);
+
+			// Decipher string
+			for (int i = 0; i < string.length(); i++) {
+				boolean letter = false;
+				for (int j = 0; j < alphabet.length(); j++) {
+					if (string.charAt(i) == alphabet.charAt(j)) {
+						deciphered += cipherAlphabet.charAt(j);
+						// Move on to next character and indicate that a letter has been found
+						letter = true;
+						break;
+					} else if (string.charAt(i) == upperAlphabet.charAt(j)) {
+						deciphered += upperCipherAlphabet.charAt(j);
+						letter = true;
+						break;
+					}
+					
+				}
+				// If character is a space or punctuation or anything else than a letter
+				if (letter == false) {
+					deciphered += string.charAt(i);
+				} else
+					letter = false;
+			}
+
+			return deciphered;
+		}
 	}
 
 	/**
