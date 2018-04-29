@@ -834,8 +834,60 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+
+			String encoded = "";
+
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			String ciphabet = "zyxwvutsrqponmlkjihgfedcba";
+
+			boolean foundLetter = false;
+			int blockIndicator = 1;
+			int endOfStringIndicator = 0;
+
+			for (int i = 0; i < string.length(); i++) {
+				endOfStringIndicator++;
+				
+				switch (string.charAt(i)) {
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					// If the character is a number
+					encoded += string.charAt(i);
+					foundLetter = true;
+				default:
+				}
+
+				// Find index of character in string
+				for (int j = 0; j < alphabet.length(); j++) {
+					if (string.charAt(i) == alphabet.charAt(j)) {
+						// Add character to encoded message
+						encoded += ciphabet.charAt(j);
+						foundLetter = true;
+					} else if (string.charAt(i) == upperAlphabet.charAt(j)) {
+						encoded += ciphabet.charAt(j);
+						foundLetter = true;
+					}
+		
+					if (foundLetter) {
+						if (blockIndicator % 5 == 0 && endOfStringIndicator != string.length()-1) {
+							encoded += " ";
+						}
+						foundLetter = false;
+						blockIndicator++;
+						break;
+					}
+				}
+			}
+
+			return encoded;
 		}
 
 		/**
