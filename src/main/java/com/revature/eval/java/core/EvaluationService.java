@@ -758,8 +758,47 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		List<Long> primes = new ArrayList<Long>();
+		// Will be used to indicate when we have reached the nth prime
+		// Starts at 2 as first two primes are already added
+		int nThPrimeIndicator = 2;
+		boolean prime = true;
+		
+		if (i <= 0)
+			throw new IllegalArgumentException("Invalid input!");
+
+		primes.add((long) 2);
+		primes.add((long) 3);
+
+		// Looking for 1st or 2nd prime number
+		if (i == 1) {
+			return Math.toIntExact(primes.get(i - 1));
+		} else if (i == 2) {
+			return Math.toIntExact(primes.get(i - 1));
+		}
+
+		// Populate list with primes until nth prime is found
+		for (int j = 4; j < i * i; j++) {
+			for (int k = 2; k < j; k++) {
+				if (j % k == 0) {
+					// If the number j is divisible by any number leading up to it and will indicate
+					// it is not prime
+					prime = false;
+					break;
+				}
+			}
+			// If the number is a prime the boolean prime would have stayed true
+			if (prime) {
+				primes.add((long) j);
+				nThPrimeIndicator++;
+				if (nThPrimeIndicator == i)
+					break;
+			} else
+				prime = true;
+			
+		}
+		
+		return Math.toIntExact(primes.get(i - 1));
 	}
 
 	/**
