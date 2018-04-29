@@ -862,7 +862,9 @@ public class EvaluationService {
 					// If the character is a number
 					encoded += string.charAt(i);
 					foundLetter = true;
+					break;
 				default:
+					break;
 				}
 
 				// Find index of character in string
@@ -897,8 +899,42 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String decoded = "";
+			
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String ciphabet = "zyxwvutsrqponmlkjihgfedcba";
+
+			for (int i = 0; i < string.length(); i++) {
+				
+				switch (string.charAt(i)) {
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					// If the character is a number
+					decoded += string.charAt(i);
+					break;
+				default:
+					break;
+				}
+
+				// Find index of character in string
+				for (int j = 0; j < ciphabet.length(); j++) {
+					if (string.charAt(i) == ciphabet.charAt(j)) {
+						// Add character to decoded message
+						decoded += alphabet.charAt(j);
+					} 
+				}
+			}
+
+			return decoded;
 		}
 	}
 
