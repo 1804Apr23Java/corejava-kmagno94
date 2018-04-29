@@ -375,34 +375,50 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			
-			int numSearch = Integer.parseInt(t.toString());
-			int indVal=0;
-			
+
 			int first = 0;
 			int last = sortedList.size() - 1;
-			
-			while(first <= last) {
-				int middle = (first + last)/2;
-				try {
-				indVal = Integer.parseInt((String) sortedList.get(middle));
-				} catch (ClassCastException e) {
-					// If the list is not a String
-					indVal = (int) sortedList.get(middle);
+
+			if (sortedList.get(0) instanceof String) {
+
+				// For A list of Strings
+				int indVal = 0;
+				int numSearch = Integer.parseInt(t.toString());
+				int middle;
+
+				while (first <= last) {
+					middle = (first + last) / 2;
+					indVal = Integer.parseInt((String) sortedList.get(middle));
+					if (indVal == numSearch) {
+						// If the middle index is the key
+						return middle;
+					} else if (indVal < numSearch) {
+						// If the middle index is less than the key value
+						first = middle + 1;
+					} else if (indVal > numSearch) {
+						// If the middle index is greater than the key value
+						last = middle - 1;
+					}
 				}
-				if(indVal == numSearch) {
-					// If the middle index is the key
-					return middle;
-				} else if (indVal < numSearch) {
-					// If the middle index is less than the key value
-					first = middle + 1;
-				} else if (indVal > numSearch) {
-					// If the middle index is greater than the key value
-					last = middle - 1;
+			} else if (sortedList.get(0) instanceof Integer) {
+
+				int middle;
+				int numSearch = (int) t;
+
+				while (first <= last) {
+					middle = (first + last) / 2;
+					if ((int) sortedList.get(middle) == numSearch) {
+						return middle;
+					} else if ((int) sortedList.get(middle) < numSearch) {
+						first = middle + 1;
+					} else if ((int) sortedList.get(middle) > numSearch) {
+						last = middle - 1;
+					}
 				}
 			}
-			// Key is the first element
-			return 0;
+
+			// Element not found
+			return -1;
 		}
 
 		public BinarySearch(List<T> sortedList) {
