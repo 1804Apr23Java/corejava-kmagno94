@@ -961,8 +961,68 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+
+		int sum = 0;
+		int multiplier = 10;
+
+		for (int i = 0; i < string.length(); i++) {
+			switch (string.charAt(i)) {
+			case '0':
+				sum += (0 * multiplier);
+				multiplier -= 1;
+				break;
+			case '1':
+				sum += (1 * multiplier);
+				multiplier -= 1;
+				break;
+			case '2':
+				sum += (2 * multiplier);
+				multiplier -= 1;
+				break;
+			case '3':
+				sum += (3 * multiplier);
+				multiplier -= 1;
+				break;
+			case '4':
+				sum += (4 * multiplier);
+				multiplier -= 1;
+				break;
+			case '5':
+				sum += (5 * multiplier);
+				multiplier -= 1;
+				break;
+			case '6':
+				sum += (6 * multiplier);
+				multiplier -= 1;
+				break;
+			case '7':
+				sum += (7 * multiplier);
+				multiplier -= 1;
+				break;
+			case '8':
+				sum += (8 * multiplier);
+				multiplier -= 1;
+				break;
+			case '9':
+				sum += (9 * multiplier);
+				multiplier -= 1;
+				break;
+			case 'X':
+				sum += (10 * multiplier);
+				multiplier -= 1;
+				break;
+			case '-':
+				// Skip over dashes
+				break;
+			default:
+				// Invalid Input
+				return false;
+			}
+		}
+		if (sum % 11 == 0)
+			return true;
+		else
+			return false;
 	}
 
 	/**
