@@ -1039,8 +1039,30 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		boolean foundLetter = false;
+
+		for (int i = 0; i < alphabet.length(); i++) {
+			for (int j = 0; j < string.length(); j++) {
+				// If the character is a space it will move on to the next character in the
+				// string
+				if (string.charAt(j) == ' ')
+					continue;
+
+				if (alphabet.charAt(i) == string.charAt(j)) {
+					// Letter exists in sentence goes to next letter
+					foundLetter = true;
+					break;
+				}
+			}
+			if (!foundLetter) {
+				// Once a letter is not found, false will be returned
+				return false;
+			} else
+				foundLetter = false;
+		}
+		// Will only exit loop if every letter in alphabet is found in sentence
+		return true;
 	}
 
 	/**
