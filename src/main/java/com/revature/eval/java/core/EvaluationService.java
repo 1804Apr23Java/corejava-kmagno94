@@ -1183,8 +1183,60 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+
+		// Check length of String
+		if (string.length() <= 1)
+			return false;
+
+		// Get skips spaces and checks for invalid characters
+		String cleanString = "";
+		for (int i = 0; i < string.length(); i++) {
+			switch (string.charAt(i)) {
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				cleanString += string.charAt(i);
+				break;
+			case ' ':
+				break;
+			default:
+				return false;
+			}
+		}
+
+		// Populate list of numbers
+		List<Integer> nums = new ArrayList<Integer>();
+		for (int k = 0; k < cleanString.length(); k++)
+			nums.add(Character.getNumericValue(cleanString.charAt(k)));
+
+		// Luhn's Algorithm
+
+		// 1) Double every second digit starting from the right
+		// - If greater than 9 subtract 9
+		for (int j = nums.size() - 2; j >= 0; j -= 2) {
+			nums.set(j, nums.get(j) * 2);
+			if (nums.get(j) > 9)
+				nums.set(j, nums.get(j) - 9);
+		}
+
+		// 2) Sum all digits
+		int sum = 0;
+		for (int l = 0; l < nums.size(); l++) {
+			sum += nums.get(l);
+		}
+
+		// 3) If the sum is divisible by 10 then it is valid!
+		if (sum % 10 == 0)
+			return true;
+		else
+			return false;
 	}
 
 	/**
