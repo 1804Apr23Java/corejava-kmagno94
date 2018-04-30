@@ -1074,60 +1074,32 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// 10^9 Seconds broken down
-		// 31 years
-		// 8 months
-		// 6,217 hours
-		// 46 minutes
-		// 40 seconds
-		
-		int gigaSeconds = 1000000000;
-		
-		// Values for each unit of time
-		int secondsInAYear = 31540000;
-		int secondsInAMonth = 2628000;
-		int secondsInDay = 86400;
-		int secondsInHour = 3600;
-		int secondsInMinute = 60;
-		
-		// Adding to given data
-		// Convert and add to given (solid integer number)
-		// Subtract how much was added
-		
-		if(given.isSupported(ChronoUnit.YEARS)) {
-			int years = gigaSeconds/secondsInAYear;
-			given = given.plus(years, ChronoUnit.YEARS);
-			gigaSeconds -= (years * secondsInAYear);
-			
-			if(given.isSupported(ChronoUnit.MONTHS)) {
-				int months = gigaSeconds/secondsInAMonth;
-				given = given.plus(months, ChronoUnit.MONTHS);
-				gigaSeconds -= (months * secondsInAMonth);
-				
-				if(given.isSupported(ChronoUnit.DAYS)) {
-					int days = gigaSeconds/secondsInDay;
-					given = given.plus(days, ChronoUnit.DAYS);
-					gigaSeconds -= (days * secondsInDay);
-					
-					if(given.isSupported(ChronoUnit.HOURS)) {
-						int hours = gigaSeconds/secondsInHour;
-						given = given.plus(hours, ChronoUnit.HOURS);
-						gigaSeconds -= (hours * secondsInHour);
-						
-						if(given.isSupported(ChronoUnit.MINUTES)) {
-							int minutes = gigaSeconds/secondsInMinute;
-							given = given.plus(minutes, ChronoUnit.MINUTES);
-							gigaSeconds -= (minutes * secondsInMinute);
-							
-							if(given.isSupported(ChronoUnit.SECONDS)) {
-								given = given.plus(gigaSeconds, ChronoUnit.SECONDS);
-							}
-						}
-					}
-				}
-			}
-		}
-		
+
+		// Each Field of time
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		int hour = 0;
+		int minute = 0;
+		int second = 0;
+
+		// Find out if the given Temporal contained the fields of time or not
+		if (given.isSupported(ChronoField.YEAR))
+			year = given.get(ChronoField.YEAR);
+		if (given.isSupported(ChronoField.MONTH_OF_YEAR))
+			month = given.get(ChronoField.MONTH_OF_YEAR);
+		if (given.isSupported(ChronoField.DAY_OF_MONTH))
+			day = given.get(ChronoField.DAY_OF_MONTH);
+		if (given.isSupported(ChronoField.HOUR_OF_DAY))
+			hour = given.get(ChronoField.HOUR_OF_DAY);
+		if (given.isSupported(ChronoField.MINUTE_OF_HOUR))
+			minute = given.get(ChronoField.MINUTE_OF_HOUR);
+		if (given.isSupported(ChronoField.SECOND_OF_MINUTE))
+			second = given.get(ChronoField.SECOND_OF_MINUTE);
+
+		// Add gigaSecond to given temporal according to supported fields of time
+		given = LocalDateTime.of(year, month, day, hour, minute, second).plusSeconds(1000000000);
+
 		return given;
 	}
 
