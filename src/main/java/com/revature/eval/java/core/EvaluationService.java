@@ -1074,8 +1074,61 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		// 10^9 Seconds broken down
+		// 31 years
+		// 8 months
+		// 6,217 hours
+		// 46 minutes
+		// 40 seconds
+		
+		int gigaSeconds = 1000000000;
+		
+		// Values for each unit of time
+		int secondsInAYear = 31540000;
+		int secondsInAMonth = 2628000;
+		int secondsInDay = 86400;
+		int secondsInHour = 3600;
+		int secondsInMinute = 60;
+		
+		// Adding to given data
+		// Convert and add to given (solid integer number)
+		// Subtract how much was added
+		
+		if(given.isSupported(ChronoUnit.YEARS)) {
+			int years = gigaSeconds/secondsInAYear;
+			given = given.plus(years, ChronoUnit.YEARS);
+			gigaSeconds -= (years * secondsInAYear);
+			
+			if(given.isSupported(ChronoUnit.MONTHS)) {
+				int months = gigaSeconds/secondsInAMonth;
+				given = given.plus(months, ChronoUnit.MONTHS);
+				gigaSeconds -= (months * secondsInAMonth);
+				
+				if(given.isSupported(ChronoUnit.DAYS)) {
+					int days = gigaSeconds/secondsInDay;
+					given = given.plus(days, ChronoUnit.DAYS);
+					gigaSeconds -= (days * secondsInDay);
+					
+					if(given.isSupported(ChronoUnit.HOURS)) {
+						int hours = gigaSeconds/secondsInHour;
+						given = given.plus(hours, ChronoUnit.HOURS);
+						gigaSeconds -= (hours * secondsInHour);
+						
+						if(given.isSupported(ChronoUnit.MINUTES)) {
+							int minutes = gigaSeconds/secondsInMinute;
+							given = given.plus(minutes, ChronoUnit.MINUTES);
+							gigaSeconds -= (minutes * secondsInMinute);
+							
+							if(given.isSupported(ChronoUnit.SECONDS)) {
+								given = given.plus(gigaSeconds, ChronoUnit.SECONDS);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return given;
 	}
 
 	/**
@@ -1092,8 +1145,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int sum = 0;
+		List<Long> multiples = new ArrayList<Long>();
+		boolean multipleExists = false;
+		
+		for(int j = 0; j < set.length; j++) {
+			for(int k = set[j]; k < i; k++) {
+				if (k % set[j] == 0) {
+					// Check if multiple exists in list
+					for(int l = 0; l < multiples.size(); l++) {
+						if(k == multiples.get(l)) {
+							multipleExists = true;
+							break;
+						}
+					}
+					if(!multipleExists)
+						multiples.add((long) k);
+					else
+						multipleExists = false;
+				}
+			}
+		}
+		
+		for(int m = 0; m < multiples.size(); m++) {
+			sum += multiples.get(m);
+		}
+		
+		return sum;
 	}
 
 	/**
