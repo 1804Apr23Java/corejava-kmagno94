@@ -1243,8 +1243,71 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		String[] problem = string.split(" ");
+		int result = 0;
+
+		int num1 = 0;
+		int num2 = 0;
+		String number2 = "";
+
+		num1 = Integer.parseInt(problem[2]);
+
+		if (problem.length == 5) {
+			// Second number will be in index 4
+			for (int i = 0; i < problem[4].length(); i++) {
+				switch (problem[4].charAt(i)) {
+				case '-':
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					number2 += problem[4].charAt(i);
+					break;
+				default:
+					break;
+				}
+			}
+			num2 = Integer.parseInt(number2);
+		} else {
+			// Second number will be in index 5
+			for (int i = 0; i < problem[5].length(); i++) {
+				switch (problem[5].charAt(i)) {
+				case '-':
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					number2 += problem[5].charAt(i);
+					break;
+				default:
+					break;
+				}
+			}
+			num2 = Integer.parseInt(number2);
+		}
+
+		if (problem[3].equals("plus"))
+			result = num1 + num2;
+		else if (problem[3].equals("minus"))
+			result = num1 - num2;
+		else if (problem[3].equals("multiplied"))
+			result = num1 * num2;
+		else if (problem[3].equals("divided"))
+			result = num1 / num2;
+
+		return result;
 	}
 
 }
