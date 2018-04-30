@@ -256,9 +256,9 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		String cleanNumber = "";
-		
-		for(int i = 0; i < string.length(); i++) {
-			switch(string.charAt(i)) {
+
+		for (int i = 0; i < string.length(); i++) {
+			switch (string.charAt(i)) {
 			case '0':
 			case '1':
 			case '2':
@@ -279,13 +279,12 @@ public class EvaluationService {
 			case '-':
 				break;
 			default:
-				throw new  IllegalArgumentException("Non-numeric Entry has been entered!");
+				throw new IllegalArgumentException("Non-numeric Entry has been entered!");
 			}
 		}
-		if(cleanNumber.length() > 11)
+		if (cleanNumber.length() > 11)
 			throw new IllegalArgumentException("Invalid Number. More than 11 digits have been entered!");
-		
-		
+
 		return cleanNumber;
 	}
 
