@@ -378,7 +378,7 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-
+		/*
 			int first = 0;
 			int last = sortedList.size() - 1;
 
@@ -419,6 +419,7 @@ public class EvaluationService {
 					}
 				}
 			}
+			*/
 
 			// Element not found
 			return -1;
